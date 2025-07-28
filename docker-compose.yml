@@ -1,0 +1,100 @@
+# docker-compose.yml (The FULL Elastic Stack)
+
+services:
+  # 1. Elasticsearch: The Database
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.1
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - es-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s"]
+      interval: 10s
+      timeout: 10s
+      retries: 15
+
+  # 2. Kibana: The UI
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.14.1
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
+
+# 3. Logstash: The Data Processor
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.14.1
+    container_name: logstash
+    # --- THIS IS THE FIX ---
+    # Explicitly tell Logstash which configuration file to run.
+    command: logstash -f /usr/share/logstash/pipeline/logstash.conf
+    ports:
+      - "5044:5044"
+    volumes:
+      # This line is still needed to provide the file
+      - ./config/logstash/pipeline/:/usr/share/logstash/pipeline/
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
+   # 4. Filebeat: The Data Shipper
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.14.1
+    container_name: filebeat
+    user: root
+    # --- THIS IS THE FIX ---
+    # Overrides the default command to add a flag that disables the strict permission checks.
+    command: filebeat -e -strict.perms=false
+    volumes:
+      - ./config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - //var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - es-net
+    depends_on:
+      - logstash
+  # 5. Your Flask App Service
+  jupyter-app:
+    build: .
+    container_name: jupyter_app
+    ports:
+      - "5001:5000"
+    labels:
+      co.elastic.logs/enabled: "true"
+    volumes:
+      - ./data:/app/data
+      - ./templates:/app/templates
+      - ./static:/app/static
+      - model-cache:/root/.cache
+    networks:
+      - es-net
+    environment:
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+      - PYTHONUNBUFFERED=1
+      - HF_HOME=/root/.cache/huggingface
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+volumes:
+  esdata:
+    driver: local
+  model-cache:
+    driver: local
+
+networks:
+  es-net:
+    driver: bridge

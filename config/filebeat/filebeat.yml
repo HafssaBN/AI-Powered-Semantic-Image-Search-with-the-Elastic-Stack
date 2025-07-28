@@ -1,0 +1,21 @@
+# config/filebeat/filebeat.yml (Final Combined and Validated Version)
+
+# --- Direct Input (for immediate, reliable log collection) ---
+filebeat.inputs:
+- type: container
+  paths:
+    - '/var/lib/docker/containers/*/*.log'
+
+# --- Autodiscover (for future flexibility with hints) ---
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+# --- Processors (adds useful metadata) ---
+processors:
+  - add_docker_metadata: ~
+
+# --- Output (sends to Logstash) ---
+output.logstash:
+  hosts: ["logstash:5044"]

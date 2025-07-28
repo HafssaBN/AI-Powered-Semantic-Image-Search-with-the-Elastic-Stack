@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CLIP Image Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>CLIP Image Search</h1>
+
+        <div class="info-box">
+            <strong>Want to see how the AI thinks?</strong>
+            <a href="/visualize">View the Image Semantic Map</a>
+        </div>
+        
+        <section>
+            <h2>1. Index Images</h2>
+            <p>Click the button below to index all images in <code>static/images</code>.</p>
+            <form action="/index_images" method="post">
+                <button type="submit">Index All Images</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>2. Search for Similar Images</h2>
+            <p>You can search using an image or a text description.</p>
+
+            <form method="post" enctype="multipart/form-data" class="input-group">
+                <input type="file" name="file">
+                <button type="submit">Search by Image</button>
+            </form>
+
+            <form method="post" class="input-group">
+                <input type="text" name="text_query" placeholder="e.g., a blue butterfly on a flower" required value="{{ text_query or '' }}">
+                <button type="submit">Search by Text</button>
+            </form>
+        </section>
+
+        {% if error %}
+            <div class="error-box">
+                <strong>Error:</strong> {{ error }}
+                <p><strong>Tip:</strong> Did you click the "Index All Images" button first?</p>
+            </div>
+        {% endif %}
+
+        {% if query_image or text_query %}
+            <div class="query-grid">
+                <div class="grid-item">
+                    {% if query_image %}
+                        <h3>Your Query Image</h3>
+                        <img src="{{ url_for('static', filename=query_image.split('static/')[1]) }}" alt="Query Image">
+                    {% elif text_query %}
+                        <h3>Your Query Text</h3>
+                        <p class="query-text">"{{ text_query }}"</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if results %}
+            <h2>Search Results</h2>
+            <div class="results-grid">
+                {% for result in results %}
+                <div class="grid-item">
+                    <img src="{{ url_for('static', filename=result.path.split('static/')[1]) }}" alt="Result Image">
+                    <p class="score">Score: {{ "%.4f"|format(result.score) }}</p>
+                    <p class="filepath">{{ result.path }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

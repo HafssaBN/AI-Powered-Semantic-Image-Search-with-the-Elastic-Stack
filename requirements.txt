@@ -1,0 +1,10 @@
+# This first line is the magic. It tells pip to look for CPU-specific packages here first.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# The rest of your packages
+flask
+elasticsearch>=8.14.0,<8.15.0
+sentence-transformers
+Pillow
+jupyterlab
+umap-learn
