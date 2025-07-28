@@ -4,7 +4,27 @@ This project is a full-stack web application that allows you to search for image
 
 The entire application and its monitoring backend are fully containerized using Docker Compose, creating a complete, end-to-end, and reproducible MLOps environment.
 
-![Screenshot](![Project Demo](./demo-images/app interface.png))  
+<h3>Project Showcase</h3>
+<p>A complete overview of the running system, from the front-end application to the Elastic Stack backend components.</p>
+
+<table>
+  <tr>
+    <td align="center"><strong>1. Web Application UI</strong></td>
+    <td align="center"><strong>2. Elasticsearch Database</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./demo-images/app-interface.png" alt="Web App Interface" width="400"></td>
+    <td><img src="./demo-images/elasticsearch-db.png" alt="Elasticsearch DB" width="400"></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>3. Kibana Dashboard</strong></td>
+    <td align="center"><strong>4. Filebeat Logs in Kibana</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./demo-images/kibana-dashboard.png" alt="Kibana Dashboard" width="400"></td>
+    <td><img src="./demo-images/filebeat-logs.png" alt="Filebeat Logs" width="400"></td>
+  </tr>
+</table>
 
 ---
 
