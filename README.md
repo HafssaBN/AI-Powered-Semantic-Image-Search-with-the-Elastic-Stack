@@ -161,17 +161,3 @@ The first run will download model weights and images, so it may take several min
 ## 📄 License
 
 This project is licensed under the **MIT License**. See the `LICENSE` file for details.
-
-```
-
-✅ **Fixes applied:**
-- Proper headings (`##` instead of inline bold for sections).
-- Used **lists** for features and stack to avoid walls of text.
-- Enclosed **commands and folder structures** in fenced code blocks.
-- Removed unnecessary “IGNORE_WHEN_COPYING” lines.
-- Ensured **spacing** for better GitHub rendering.
-
----
-
-👉 Question: Do you want me to also add **badges (Docker, Python, Elasticsearch, MIT License, etc.)** at the top for a more professional GitHub README? They make it look polished.
-```
