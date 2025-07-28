@@ -4,8 +4,7 @@ This project is a full-stack web application that allows you to search for image
 
 The entire application and its monitoring backend are fully containerized using Docker Compose, creating a complete, end-to-end, and reproducible MLOps environment.
 
-![Screenshot](PATH_TO_YOUR_SCREENSHOT.png)  
-*(Replace with a screenshot of your successful search results)*
+![Screenshot](![Project Demo](./demo-images/app interface.png))  
 
 ---
 
