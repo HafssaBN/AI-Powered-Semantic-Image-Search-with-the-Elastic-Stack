@@ -131,7 +131,6 @@ The first run will download model weights and images, so it may take several min
 1. **Access the Image Search App**
 
    * [http://localhost:5001](http://localhost:5001)
-1.1. you have to  check if elastic search DB is initialised : [http://localhost:9200] 
 
 2. **Index Your Images (CRITICAL FIRST STEP)**
 
