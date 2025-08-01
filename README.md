@@ -103,7 +103,7 @@ image-search-app/
 **1️⃣ Clone the repository**
 ```bash
 git clone <this repo>
-cd image-search-app
+cd AI-Powered-Semantic-Image-Search-with-the-Elastic-Stack
 ````
 
 **2️⃣ Create necessary directories**
@@ -131,6 +131,7 @@ The first run will download model weights and images, so it may take several min
 1. **Access the Image Search App**
 
    * [http://localhost:5001](http://localhost:5001)
+1.1. you have to  check if elastic search DB is initialised : [http://localhost:9200] 
 
 2. **Index Your Images (CRITICAL FIRST STEP)**
 
@@ -147,17 +148,11 @@ The first run will download model weights and images, so it may take several min
    * **Elasticsearch (Database API)**: [http://localhost:9200](http://localhost:9200)
    * **Visualization Map**: [http://localhost:5001/visualize](http://localhost:5001/visualize)
 
----
-
-## 🛣️ Future Enhancements (Roadmap)
-
-* Fine-tune the CLIP model for domain-specific datasets.
-* Implement hybrid search (vector + keyword).
-* Build Kibana dashboards for Flask log metrics.
-* Scale the system for larger datasets with multiple Elasticsearch nodes.
 
 ---
 
 ## 📄 License
 
 This project is licensed under the **MIT License**. See the `LICENSE` file for details.
+
+

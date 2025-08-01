@@ -14,7 +14,6 @@ COPY requirements.txt .
 
 # Install all Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install plotly scikit-learn pandas
 
 # Copy the rest of your application code
 COPY . .

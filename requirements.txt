@@ -8,3 +8,7 @@ sentence-transformers
 Pillow
 jupyterlab
 umap-learn
+plotly 
+scikit-learn 
+pandas
+google-search-results
